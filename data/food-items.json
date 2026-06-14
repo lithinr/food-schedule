@@ -75,7 +75,7 @@
   "morningSnack": [
     {
       "id": "ms1",
-      "name": "Apple",
+      "name": "Fruits",
       "ingredients": [
         "Banana",
         "Apple",
@@ -84,7 +84,7 @@
     },
     {
       "id": "ms2",
-      "name": "Bread Butter Jam",
+      "name": "Biscuits with Milk",
       "ingredients": [
         "Biscuits",
         "Milk"
@@ -92,7 +92,7 @@
     },
     {
       "id": "ms3",
-      "name": "Banana Fritters",
+      "name": "Banana Smoothie",
       "ingredients": [
         "Banana",
         "Milk",
