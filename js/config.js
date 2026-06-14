@@ -1,7 +1,9 @@
 // Application Configuration
 const CONFIG = {
-    GITHUB_API_BASE: 'https://api.github.com',
-    DATA_BRANCH: 'main',
+    SUPABASE: {
+        TABLE: 'app_state',
+        APP_STATE_ID: 'family_main'
+    },
     CATEGORIES: {
         breakfast: 'Breakfast',
         lunch: 'Lunch',
@@ -9,17 +11,12 @@ const CONFIG = {
         eveningSnack: 'Evening Snack'
     },
     STORAGE_KEYS: {
-        GITHUB_TOKEN: 'github_token',
-        GITHUB_REPO: 'github_repo',
+        SUPABASE_URL: 'supabase_url',
+        SUPABASE_ANON_KEY: 'supabase_anon_key',
         FOOD_ITEMS: 'food_items',
         WEEKLY_MENU: 'weekly_menu',
         MEAL_HISTORY: 'meal_history',
         LAST_SYNC: 'last_sync'
-    },
-    DATA_FILES: {
-        FOOD_ITEMS: 'data/food-items.json',
-        WEEKLY_MENU: 'data/weekly-menu.json',
-        MEAL_HISTORY: 'data/meal-history.json'
     },
     MENU_ROTATION_DAYS: 7, // Avoid repeats within 7 days
     WORK_DAYS: 5, // Monday to Friday

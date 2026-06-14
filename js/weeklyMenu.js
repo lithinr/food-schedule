@@ -221,9 +221,9 @@ const WeeklyMenu = {
         this.editMode = false;
         this.render();
         
-        // Sync to GitHub
+        // Sync to cloud
         Utils.showToast('Saving weekly menu...', 'info');
-        Storage.pushToGitHub(true).then(result => {
+        Storage.pushToSupabase(true).then(result => {
             if (result.success) {
                 Utils.showToast('✓ Weekly menu saved and synced', 'success');
                 // Refresh daily menu if today is visible

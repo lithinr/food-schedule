@@ -1,139 +1,88 @@
 # Family Food Schedule
 
-A mobile-friendly web application for planning daily and weekly meals for your family. Generate smart meal plans, track what you've prepared, and create shopping lists automatically.
+A mobile-friendly web application for planning daily and weekly meals for your family. The app supports Monday to Friday weekly planning, daily meal tracking, shopping list generation, and cross-device cloud sync using Supabase.
 
 ## Features
 
-- 📅 **Daily Menu**: View and manage today's meals (Breakfast, Lunch, Morning Snack, Evening Snack)
-- 📆 **Weekly Planner**: See the entire week's meal plan at a glance
-- 🍽️ **Food Management**: Add, edit, and organize food items with ingredients
-- 🛒 **Shopping List**: Auto-generated list based on weekly menu
-- ✅ **Meal Tracking**: Mark meals as prepared
-- 🔄 **Smart Rotation**: Avoid repeating meals within 7 days
-- 📱 **Mobile Optimized**: Works great on iPhone (PWA support)
-- 🔐 **GitHub Sync**: Data syncs between devices via GitHub
+- Daily menu from current weekly plan
+- Monday to Friday weekly editor
+- Food item management with ingredients
+- Shopping list generation from weekly menu
+- Prepared meal tracking
+- Manual cloud sync button with status feedback
+- iPhone-friendly PWA experience
 
 ## Quick Start
 
-### 1. Set Up GitHub Repository
+### 1. Deploy App
 
-1. Create a new GitHub repository (can be private or public)
-2. Note your repository name: `username/food-schedule`
-3. Create a Personal Access Token:
-   - Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
-   - Click "Generate new token (classic)"
-   - Give it a name like "Food Schedule App"
-   - Select scope: `repo` (Full control of private repositories)
-   - Click "Generate token"
-   - **Copy the token immediately** (you won't see it again)
+Host this repository on GitHub Pages and open the deployed URL on your phones.
 
-### 2. Deploy to GitHub Pages
+### 2. Configure Supabase
 
-**Option A: Manual deployment**
-1. Push all files to your repository
-2. Go to repository Settings → Pages
-3. Under "Source", select branch `main` and folder `/ (root)`
-4. Click Save
-5. Your app will be available at: `https://username.github.io/food-schedule/`
+Create a Supabase project and copy:
+- Project URL
+- Anon key
 
-**Option B: Using GitHub Actions** (recommended)
-1. Create `.github/workflows/deploy.yml` with the following content:
+Create table and row in Supabase SQL Editor:
 
-```yaml
-name: Deploy to GitHub Pages
+```sql
+create table if not exists public.app_state (
+  id text primary key,
+  food_items jsonb not null default '{}'::jsonb,
+  weekly_menu jsonb not null default '{"weekStarting":"","days":[]}'::jsonb,
+  meal_history jsonb not null default '[]'::jsonb,
+  updated_at timestamptz not null default now()
+);
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: '.'
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+insert into public.app_state (id)
+values ('family_main')
+on conflict (id) do nothing;
 ```
 
-2. Push to GitHub - deployment will happen automatically
+Enable RLS and policies:
 
-### 3. Configure the App
+```sql
+alter table public.app_state enable row level security;
 
-1. Open the deployed app URL on your iPhone
-2. Click the settings icon (⚙️) in the bottom right
-3. Enter your GitHub Personal Access Token
-4. Enter your repository in format: `username/food-schedule`
-5. Click "Save"
-6. The app will sync your data to GitHub
+create policy if not exists "allow authenticated read"
+on public.app_state for select to authenticated using (true);
 
-### 4. Add to iPhone Home Screen (PWA)
+create policy if not exists "allow authenticated write"
+on public.app_state for insert to authenticated with check (true);
 
-1. Open the app in Safari on your iPhone
-2. Tap the Share button (square with arrow)
-3. Scroll and tap "Add to Home Screen"
-4. Name it "Food Schedule" and tap "Add"
-5. The app will now work like a native app!
+create policy if not exists "allow authenticated update"
+on public.app_state for update to authenticated using (true) with check (true);
+```
+
+### 3. Configure App Settings
+
+In app settings:
+1. Enter Supabase Project URL
+2. Enter Supabase anon key
+3. Tap Test Connection
+4. Tap Save
+
+### 4. Sync Workflow
+
+1. Tap Sync before editing
+2. Make changes
+3. Tap Sync after editing
+
+Use the same Supabase settings on both phones.
 
 ## Usage
 
-### Managing Food Items
+- Foods tab: add and edit meal options
+- Week tab: edit Monday to Friday plan
+- Today tab: follow current day meals from weekly plan
+- Shopping tab: review weekly ingredients list
 
-1. **Tap 🔄 to sync** (get latest food items)
-2. Go to "Foods" tab
-3. Click "+ Add Food" button
-4. Enter food name, select category, and add ingredients (one per line)
-5. Click "Save"
-6. **Tap 🔄 to sync** (upload changes)
-7. Edit or delete items by clicking the respective buttons on food cards
+## Troubleshooting
 
-### Viewing Daily Menu
-
-1. Go to "Today" tab
-2. View today's automatically generated menu
-3. Check off meals as you prepare them
-4. Click "Regenerate Menu" if you want different options
-
-### Planning the Week
-
-1. Go to "Week" tab
-2. View meals for the entire week
-3. Use arrows to navigate between weeks
-4. See which meals are marked as prepared (✓)
-
-### Shopping List
-
-1. Go to "Shopping" tab
-2. View all ingredients needed for the week
-3. Check off items as you buy them
-4. Click "Refresh" to regenerate the list
-
-## Data Sync
-
-- **Automatic Local Storage**: All data is stored locally in your browser
-- **Manual Sync Button**: Tap the 🔄 button to sync with GitHub (pull + push)
-- **Visual Feedback**: See sync status at top and last sync time near button
-- **Multi-Device**: Both you and your wife can access the same data
-- **Offline Support**: App works offline; sync when connected
-
-### How to Sync
-
-1. **Before using**: Tap 🔄 sync button to get latest changes
-2. **Make your changes**: Add food, mark meals, generate menus
-3. **After changes**: Tap 🔄 sync button to upload
-
-**See [SYNC_GUIDE.md](SYNC_GUIDE.md) for detailed sync workflow and tips**
+- Connection failed: verify Supabase URL and anon key
+- Sync failed: verify app_state table and RLS policies
+- Data mismatch: tap Sync on both devices
 
 ## File Structure
 
@@ -150,7 +99,7 @@ food-schedule/
 │   └── meal-history.json  # Preparation history
 └── js/
     ├── config.js          # App configuration
-    ├── githubApi.js       # GitHub API integration
+    ├── supabaseApi.js     # Supabase API integration
     ├── storage.js         # Data storage/sync
     ├── menuAlgorithm.js   # Meal rotation logic
     ├── foodManager.js     # Food CRUD operations
@@ -178,25 +127,24 @@ Place these files in the root directory.
 ## Troubleshooting
 
 **App not syncing?**
-- Check your GitHub token is correct
-- Verify repository name format: `username/repo-name`
-- Make sure token has `repo` scope permissions
-- Check browser console for errors
+- Verify Supabase URL and anon key in settings
+- Verify app_state table exists
+- Verify RLS policies allow read and write
+- Check browser console for API errors
 
 **Menu not generating?**
-- Make sure you have food items added in each category
-- Try clicking "Regenerate Menu"
-- Check if data files exist in your GitHub repo
+- Make sure food items exist in each category
+- Click Regenerate Menu
 
 **PWA not installing on iPhone?**
-- Make sure you're using Safari browser
-- Try clearing browser cache and reloading
-- Verify manifest.json is accessible
+- Open in Safari
+- Clear browser cache and retry
+- Verify manifest.json is available
 
 **Changes not saving?**
-- Check GitHub sync is configured
-- Look for error toasts at the top of screen
-- Verify internet connection
+- Tap Sync after edits
+- Check internet connection
+- Check top status bar for sync error message
 
 ## Customization
 
@@ -241,8 +189,8 @@ This is a personal project. Feel free to use and modify for your own family's ne
 
 This is a self-hosted app. No external support is provided, but you can:
 - Check browser console for errors
-- Verify GitHub API responses
-- Review data files in your repository
+- Verify Supabase responses
+- Review data in Supabase table app_state
 
 ## Version
 

@@ -1,15 +1,15 @@
 // Data Storage and Sync Management
 const Storage = {
     async init() {
-        // Initialize GitHub API
-        GitHubAPI.init();
+        // Initialize Supabase API
+        SupabaseAPI.init();
         
         // Load data from localStorage first (offline support)
         this.loadLocalData();
         
-        // Try to sync with GitHub if configured
-        if (GitHubAPI.isConfigured()) {
-            await this.syncFromGitHub();
+        // Try to sync with Supabase if configured
+        if (SupabaseAPI.isConfigured()) {
+            await this.syncFromSupabase(false);
         }
     },
     
@@ -24,29 +24,20 @@ const Storage = {
         window.mealHistory = mealHistory ? JSON.parse(mealHistory) : [];
     },
     
-    async syncFromGitHub(showToast = true) {
+    async syncFromSupabase(showToast = true) {
         try {
-            // Read food items
-            const foodData = await GitHubAPI.readFile(CONFIG.DATA_FILES.FOOD_ITEMS);
-            if (foodData) {
-                window.foodItems = foodData.content;
-                this.saveFoodItems(window.foodItems);
+            const state = await SupabaseAPI.readState();
+
+            // If row doesn't exist yet, create it from local state
+            if (!state) {
+                await this.pushToSupabase(false);
             } else {
-                // Create initial file if it doesn't exist
-                await this.pushToGitHub(false);
-            }
-            
-            // Read weekly menu
-            const menuData = await GitHubAPI.readFile(CONFIG.DATA_FILES.WEEKLY_MENU);
-            if (menuData) {
-                window.weeklyMenu = menuData.content;
+                window.foodItems = state.food_items || this.getDefaultFoodItems();
+                window.weeklyMenu = state.weekly_menu || this.getDefaultWeeklyMenu();
+                window.mealHistory = state.meal_history || [];
+
+                this.saveFoodItems(window.foodItems);
                 this.saveWeeklyMenu(window.weeklyMenu);
-            }
-            
-            // Read meal history
-            const historyData = await GitHubAPI.readFile(CONFIG.DATA_FILES.MEAL_HISTORY);
-            if (historyData) {
-                window.mealHistory = historyData.content;
                 this.saveMealHistory(window.mealHistory);
             }
             
@@ -54,12 +45,12 @@ const Storage = {
             localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_SYNC, now);
             
             if (showToast) {
-                Utils.showToast('✓ Synced with GitHub', 'success');
+                Utils.showToast('✓ Synced with cloud', 'success');
             }
             
             return { success: true, timestamp: now };
         } catch (error) {
-            console.error('Error syncing from GitHub:', error);
+            console.error('Error syncing from Supabase:', error);
             if (showToast) {
                 Utils.showToast('✗ Sync failed: ' + error.message, 'error');
             }
@@ -67,27 +58,28 @@ const Storage = {
         }
     },
     
-    async pushToGitHub(showToast = true) {
-        if (!GitHubAPI.isConfigured()) {
-            return { success: false, error: 'GitHub not configured' };
+    async pushToSupabase(showToast = true) {
+        if (!SupabaseAPI.isConfigured()) {
+            return { success: false, error: 'Supabase not configured' };
         }
         
         try {
-            // Push all data files
-            await GitHubAPI.writeFile(CONFIG.DATA_FILES.FOOD_ITEMS, window.foodItems);
-            await GitHubAPI.writeFile(CONFIG.DATA_FILES.WEEKLY_MENU, window.weeklyMenu);
-            await GitHubAPI.writeFile(CONFIG.DATA_FILES.MEAL_HISTORY, window.mealHistory);
+            await SupabaseAPI.writeState({
+                food_items: window.foodItems,
+                weekly_menu: window.weeklyMenu,
+                meal_history: window.mealHistory
+            });
             
             const now = new Date().toISOString();
             localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_SYNC, now);
             
             if (showToast) {
-                Utils.showToast('✓ Pushed to GitHub', 'success');
+                Utils.showToast('✓ Pushed to cloud', 'success');
             }
             
             return { success: true, timestamp: now };
         } catch (error) {
-            console.error('Error pushing to GitHub:', error);
+            console.error('Error pushing to Supabase:', error);
             if (showToast) {
                 Utils.showToast('✗ Push failed: ' + error.message, 'error');
             }
@@ -96,9 +88,9 @@ const Storage = {
     },
     
     async fullSync(showToast = true) {
-        if (!GitHubAPI.isConfigured()) {
+        if (!SupabaseAPI.isConfigured()) {
             if (showToast) {
-                Utils.showToast('Configure GitHub sync in Settings first', 'error');
+                Utils.showToast('Configure Supabase sync in Settings first', 'error');
             }
             return { success: false, error: 'Not configured' };
         }
@@ -112,8 +104,8 @@ const Storage = {
             const localWeeklyMenu = JSON.parse(JSON.stringify(window.weeklyMenu));
             const localMealHistory = JSON.parse(JSON.stringify(window.mealHistory));
             
-            // 2. Pull latest from GitHub
-            const pullResult = await this.syncFromGitHub(false);
+            // 2. Pull latest from Supabase
+            const pullResult = await this.syncFromSupabase(false);
             
             // 3. Merge local changes with remote
             if (pullResult.success) {
@@ -138,8 +130,8 @@ const Storage = {
                 this.saveMealHistory(window.mealHistory);
             }
             
-            // 4. Push merged data to GitHub
-            const pushResult = await this.pushToGitHub(false);
+            // 4. Push merged data to Supabase
+            const pushResult = await this.pushToSupabase(false);
             
             if (pullResult.success && pushResult.success) {
                 if (showToast) {

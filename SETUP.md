@@ -1,95 +1,105 @@
 # Quick Setup Guide
 
-## Step 1: Create GitHub Repository
+## Step 1: Deploy the App (GitHub Pages)
 
-1. Go to https://github.com/new
-2. Name it: `food-schedule` (or any name you prefer)
-3. Choose Public or Private
-4. Don't initialize with README (we already have files)
-5. Click "Create repository"
+1. Create or use your existing GitHub repository for this project.
+2. Push your latest code.
+3. In GitHub repo settings, open Pages.
+4. Set source to branch main and folder root.
+5. Save and wait for deployment.
 
-## Step 2: Get Personal Access Token
+Your app URL will be:
+https://YOUR_USERNAME.github.io/food-schedule/
 
-1. Go to https://github.com/settings/tokens
-2. Click "Generate new token" → "Generate new token (classic)"
-3. Name: `Food Schedule App`
-4. Select scope: ✓ **repo** (full control of private repositories)
-5. Click "Generate token"
-6. **COPY THE TOKEN** - save it somewhere safe! You'll need it later.
+## Step 2: Create Supabase Project
 
-## Step 3: Push Code to GitHub
+1. Open https://supabase.com and create a new project.
+2. In project settings, copy:
+   - Project URL
+   - Anon key
 
-Open terminal/command prompt in this folder and run:
+## Step 3: Create Required Table
 
-```bash
-git init
-git add .
-git commit -m "Initial commit - Food Schedule App"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/food-schedule.git
-git push -u origin main
+In Supabase SQL Editor, run:
+
+```sql
+create table if not exists public.app_state (
+  id text primary key,
+  food_items jsonb not null default '{}'::jsonb,
+  weekly_menu jsonb not null default '{"weekStarting":"","days":[]}'::jsonb,
+  meal_history jsonb not null default '[]'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+insert into public.app_state (id)
+values ('family_main')
+on conflict (id) do nothing;
 ```
 
-Replace `YOUR_USERNAME` with your GitHub username.
+## Step 4: Enable RLS and Policies
 
-## Step 4: Enable GitHub Pages
+In Supabase SQL Editor, run:
 
-1. Go to your repository on GitHub
-2. Click "Settings" → "Pages" (in sidebar)
-3. Under "Source", select:
-   - Branch: `main`
-   - Folder: `/ (root)`
-4. Click "Save"
-5. Wait 1-2 minutes for deployment
-6. Your app URL will be: `https://YOUR_USERNAME.github.io/food-schedule/`
+```sql
+alter table public.app_state enable row level security;
 
-## Step 5: Generate App Icons
+create policy if not exists "allow authenticated read"
+on public.app_state
+for select
+to authenticated
+using (true);
 
-1. Open `icon-generator.html` in your browser
-2. Download both icon files (192x192 and 512x512)
-3. Place them in the root folder
-4. Commit and push to GitHub:
-   ```bash
-   git add icon-192.png icon-512.png
-   git commit -m "Add app icons"
-   git push
-   ```
+create policy if not exists "allow authenticated write"
+on public.app_state
+for insert
+to authenticated
+with check (true);
 
-## Step 6: Configure App on iPhone
+create policy if not exists "allow authenticated update"
+on public.app_state
+for update
+to authenticated
+using (true)
+with check (true);
+```
 
-1. Open the app URL on your iPhone Safari
-2. Tap the Settings icon (⚙️) in bottom right
-3. Enter your GitHub Personal Access Token (from Step 2)
-4. Enter repository: `YOUR_USERNAME/food-schedule`
-5. Tap "Save"
+Note:
+- If you are not using Supabase Auth yet, create temporary anon policies for internal testing.
 
-## Step 7: Add to Home Screen
+## Step 5: Configure App on iPhone
 
-1. In Safari, tap the Share button (⬆️)
-2. Scroll down and tap "Add to Home Screen"
-3. Name it "Food Schedule"
-4. Tap "Add"
+1. Open app URL on iPhone Safari.
+2. Tap Settings button.
+3. Enter Supabase Project URL.
+4. Enter Supabase anon key.
+5. Tap Test Connection.
+6. Tap Save.
 
-## Done! 🎉
+## Step 6: Add to Home Screen
+
+1. Tap Safari Share button.
+2. Tap Add to Home Screen.
+3. Name it Food Schedule.
+
+## Step 7: Configure Wife's Phone
+
+Repeat Step 5 and Step 6 on your wife's phone with the same Supabase URL and anon key.
+
+## Done
 
 You can now:
-- ✓ Add food items
-- ✓ Generate daily/weekly menus
-- ✓ Track prepared meals
-- ✓ Create shopping lists
-- ✓ Sync between your and your wife's phones
-
-## For Your Wife's Phone
-
-Repeat Steps 6 and 7 on her iPhone. She'll use the same GitHub token and repository name to sync data.
+- Add food items
+- Edit Monday to Friday weekly menu
+- See current day menu from weekly plan
+- Generate shopping list
+- Sync data across devices via Supabase
 
 ## Need Help?
 
-- **App not loading?** Check GitHub Pages deployment status
-- **Sync not working?** Verify token has `repo` scope
-- **Icons not showing?** Make sure icon files are in root folder
-- **Data not syncing?** Both phones must use same repository name
+- App not loading: check GitHub Pages deployment
+- Connection failed: verify Supabase URL and anon key
+- Sync not working: verify table, RLS, and policies
+- Data mismatch: tap manual Sync on both devices
 
----
-
-**Security Note**: Keep your Personal Access Token private. Don't share it publicly or commit it to the repository.
+Security note:
+Keep your Supabase anon key private and only use it in trusted family devices.

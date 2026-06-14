@@ -19,10 +19,10 @@ const App = {
         // Show daily view by default
         this.showView('daily');
         
-        // Check if GitHub is configured
-        if (!GitHubAPI.isConfigured()) {
+        // Check if Supabase is configured
+        if (!SupabaseAPI.isConfigured()) {
             setTimeout(() => {
-                if (confirm('GitHub sync is not configured. Would you like to set it up now?')) {
+                if (confirm('Cloud sync is not configured. Would you like to set it up now?')) {
                     this.openSettings();
                 }
             }, 1000);
@@ -77,12 +77,14 @@ const App = {
         const openBtn = document.getElementById('open-settings-btn');
         const closeBtn = document.getElementById('close-settings-btn');
         const saveBtn = document.getElementById('save-settings-btn');
+        const testBtn = document.getElementById('test-connection-btn');
         const overlay = document.getElementById('settings-overlay');
         const syncBtn = document.getElementById('sync-btn');
         
         openBtn.addEventListener('click', () => this.openSettings());
         closeBtn.addEventListener('click', () => this.closeSettings());
         saveBtn.addEventListener('click', () => this.saveSettings());
+        testBtn.addEventListener('click', () => this.testConnection());
         syncBtn.addEventListener('click', () => this.manualSync());
         
         // Close overlay when clicking outside
@@ -101,11 +103,11 @@ const App = {
         const overlay = document.getElementById('settings-overlay');
         
         // Load current settings
-        const token = localStorage.getItem(CONFIG.STORAGE_KEYS.GITHUB_TOKEN) || '';
-        const repo = localStorage.getItem(CONFIG.STORAGE_KEYS.GITHUB_REPO) || '';
+        const url = localStorage.getItem(CONFIG.STORAGE_KEYS.SUPABASE_URL) || '';
+        const anonKey = localStorage.getItem(CONFIG.STORAGE_KEYS.SUPABASE_ANON_KEY) || '';
         
-        document.getElementById('github-token').value = token;
-        document.getElementById('github-repo').value = repo;
+        document.getElementById('supabase-url').value = url;
+        document.getElementById('supabase-anon-key').value = anonKey;
         
         overlay.classList.remove('hidden');
     },
@@ -115,27 +117,29 @@ const App = {
     },
     
     async saveSettings() {
-        const token = document.getElementById('github-token').value.trim();
-        const repo = document.getElementById('github-repo').value.trim();
+        const url = document.getElementById('supabase-url').value.trim();
+        const anonKey = document.getElementById('supabase-anon-key').value.trim();
         
-        if (!token || !repo) {
+        if (!url || !anonKey) {
             Utils.showToast('Please fill in all fields', 'error');
             return;
         }
         
-        // Validate repo format (username/repo)
-        if (!repo.includes('/')) {
-            Utils.showToast('Repository format should be: username/repo-name', 'error');
+        if (!url.startsWith('https://')) {
+            Utils.showToast('Supabase URL should start with https://', 'error');
             return;
         }
         
-        // Configure GitHub API
-        GitHubAPI.configure(token, repo);
+        // Configure Supabase API
+        SupabaseAPI.configure(url, anonKey);
         
         // Try to sync
         try {
             this.showSyncStatus('Testing connection...');
-            await Storage.fullSync(false);
+            const result = await Storage.fullSync(false);
+            if (!result.success) {
+                throw new Error(result.error || 'Connection failed');
+            }
             
             this.closeSettings();
             this.showSyncStatus('✓ Configured successfully', 'success');
@@ -148,13 +152,32 @@ const App = {
             FoodManager.render();
         } catch (error) {
             this.showSyncStatus('✗ Connection failed', 'error');
-            console.error('GitHub sync error:', error);
+            console.error('Supabase sync error:', error);
+        }
+    },
+
+    async testConnection() {
+        const url = document.getElementById('supabase-url').value.trim();
+        const anonKey = document.getElementById('supabase-anon-key').value.trim();
+
+        if (!url || !anonKey) {
+            Utils.showToast('Please enter Supabase URL and anon key first', 'error');
+            return;
+        }
+
+        try {
+            this.showSyncStatus('Testing Supabase connection...');
+            SupabaseAPI.configure(url, anonKey);
+            await SupabaseAPI.testConnection();
+            this.showSyncStatus('✓ Supabase connection successful', 'success');
+        } catch (error) {
+            this.showSyncStatus('✗ Connection failed: ' + error.message, 'error');
         }
     },
     
     async manualSync() {
-        if (!GitHubAPI.isConfigured()) {
-            Utils.showToast('Configure GitHub in Settings first', 'error');
+        if (!SupabaseAPI.isConfigured()) {
+            Utils.showToast('Configure Supabase in Settings first', 'error');
             this.openSettings();
             return;
         }

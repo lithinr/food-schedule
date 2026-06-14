@@ -119,16 +119,17 @@
         <!-- Settings Overlay -->
         <div id="settings-overlay" class="overlay hidden">
             <div class="overlay-content">
-                <h2>GitHub Settings</h2>
-                <p>Configure GitHub access for data sync</p>
+                <h2>Supabase Settings</h2>
+                <p>Configure Supabase access for cloud sync</p>
                 
-                <label for="github-token">Personal Access Token</label>
-                <input type="password" id="github-token" placeholder="ghp_...">
+                <label for="supabase-url">Project URL</label>
+                <input type="text" id="supabase-url" placeholder="https://your-project.supabase.co">
                 
-                <label for="github-repo">Repository (username/repo)</label>
-                <input type="text" id="github-repo" placeholder="username/food-schedule">
+                <label for="supabase-anon-key">Anon Key</label>
+                <input type="password" id="supabase-anon-key" placeholder="eyJ...">
                 
                 <div class="form-buttons">
+                    <button class="btn-secondary" id="test-connection-btn">Test Connection</button>
                     <button class="btn-primary" id="save-settings-btn">Save</button>
                     <button class="btn-secondary" id="close-settings-btn">Close</button>
                 </div>
@@ -141,7 +142,7 @@
         </div>
 
         <!-- Action Buttons (Floating) -->
-        <button class="sync-btn" id="sync-btn" title="Sync with GitHub">🔄</button>
+        <button class="sync-btn" id="sync-btn" title="Sync with cloud">🔄</button>
         <button class="settings-btn" id="open-settings-btn" title="Settings">⚙️</button>
         
         <!-- Last Sync Display -->
@@ -150,8 +151,9 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="js/config.js"></script>
-    <script src="js/githubApi.js"></script>
+    <script src="js/supabaseApi.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/menuAlgorithm.js"></script>
     <script src="js/foodManager.js"></script>
