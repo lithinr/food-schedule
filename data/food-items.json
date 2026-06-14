@@ -2,7 +2,7 @@
   "breakfast": [
     {
       "id": "b1",
-      "name": "Idli",
+      "name": "Idli + Sambaar",
       "ingredients": [
         "Rice",
         "Urad dal",
@@ -11,7 +11,7 @@
     },
     {
       "id": "b2",
-      "name": "Dosa",
+      "name": "Dosa + Onion Chutney",
       "ingredients": [
         "Rice",
         "Urad dal",
@@ -31,7 +31,12 @@
     },
     {
       "id": "mqdimrus37mnyz8befi",
-      "name": "puttu",
+      "name": "Puttu + Banana",
+      "ingredients": []
+    },
+    {
+      "id": "mqdiqs57aoxqnvx5qg",
+      "name": "Appam + Kadala\\Paneer Curry",
       "ingredients": []
     }
   ],
