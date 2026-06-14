@@ -68,13 +68,7 @@ const FoodManager = {
         
         this.hideForm();
         this.render();
-        
-        // Sync to GitHub
-        Storage.pushToGitHub().then(success => {
-            if (success) {
-                Utils.showToast('Food item saved', 'success');
-            }
-        });
+        Utils.showToast('Food item saved (tap sync to upload)', 'success');
     },
     
     addFoodItem(category, item) {
@@ -110,13 +104,7 @@ const FoodManager = {
                 window.foodItems[category].splice(index, 1);
                 Storage.saveFoodItems(window.foodItems);
                 this.render();
-                
-                // Sync to GitHub
-                Storage.pushToGitHub().then(success => {
-                    if (success) {
-                        Utils.showToast('Food item deleted', 'success');
-                    }
-                });
+                Utils.showToast('Food item deleted (tap sync to upload)', 'success');
             }
         }
     },

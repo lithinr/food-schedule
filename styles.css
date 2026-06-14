@@ -480,7 +480,37 @@ body {
     text-decoration: line-through;
 }
 
-/* Settings */
+/* Action Buttons */
+.sync-btn {
+    position: fixed;
+    bottom: 160px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: var(--shadow-hover);
+    z-index: 99;
+    transition: all 0.3s ease;
+}
+
+.sync-btn:active {
+    transform: scale(0.95);
+}
+
+.sync-btn.syncing {
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .settings-btn {
     position: fixed;
     bottom: 90px;
@@ -500,6 +530,56 @@ body {
 
 .settings-btn:active {
     transform: scale(0.95);
+}
+
+/* Sync Status */
+.sync-status-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--secondary-color);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.sync-status-bar:not(.hidden) {
+    transform: translateY(0);
+}
+
+.sync-status-bar.success {
+    background: var(--primary-color);
+}
+
+.sync-status-bar.error {
+    background: var(--danger-color);
+}
+
+.last-sync-display {
+    position: fixed;
+    bottom: 230px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    box-shadow: var(--shadow);
+    z-index: 98;
+    max-width: 120px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.last-sync-display.never-synced {
+    opacity: 0.6;
 }
 
 .overlay {

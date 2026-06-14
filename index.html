@@ -133,8 +133,19 @@
             </div>
         </div>
 
-        <!-- Settings Button (Floating) -->
-        <button class="settings-btn" id="open-settings-btn">⚙️</button>
+        <!-- Sync Status Bar -->
+        <div id="sync-status-bar" class="sync-status-bar hidden">
+            <span id="sync-status-text">Syncing...</span>
+        </div>
+
+        <!-- Action Buttons (Floating) -->
+        <button class="sync-btn" id="sync-btn" title="Sync with GitHub">🔄</button>
+        <button class="settings-btn" id="open-settings-btn" title="Settings">⚙️</button>
+        
+        <!-- Last Sync Display -->
+        <div class="last-sync-display" id="last-sync-display">
+            <span id="last-sync-text">Never synced</span>
+        </div>
     </div>
 
     <script src="js/config.js"></script>

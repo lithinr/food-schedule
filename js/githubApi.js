@@ -69,11 +69,20 @@ const GitHubAPI = {
     
     async writeFile(path, content, sha = null) {
         try {
+            // Always fetch latest SHA before writing to prevent conflicts
+            if (!sha) {
+                const existing = await this.readFile(path);
+                if (existing) {
+                    sha = existing.sha;
+                }
+            }
+            
             const contentString = JSON.stringify(content, null, 2);
-            const encodedContent = btoa(contentString);
+            // Fix encoding for special characters
+            const encodedContent = btoa(unescape(encodeURIComponent(contentString)));
             
             const data = {
-                message: `Update ${path}`,
+                message: `Update ${path} - ${new Date().toISOString()}`,
                 content: encodedContent,
                 branch: CONFIG.DATA_BRANCH
             };

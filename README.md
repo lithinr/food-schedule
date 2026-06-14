@@ -90,11 +90,13 @@ jobs:
 
 ### Managing Food Items
 
-1. Go to "Foods" tab
-2. Click "+ Add Food" button
-3. Enter food name, select category, and add ingredients (one per line)
-4. Click "Save"
-5. Edit or delete items by clicking the respective buttons on food cards
+1. **Tap 🔄 to sync** (get latest food items)
+2. Go to "Foods" tab
+3. Click "+ Add Food" button
+4. Enter food name, select category, and add ingredients (one per line)
+5. Click "Save"
+6. **Tap 🔄 to sync** (upload changes)
+7. Edit or delete items by clicking the respective buttons on food cards
 
 ### Viewing Daily Menu
 
@@ -120,13 +122,18 @@ jobs:
 ## Data Sync
 
 - **Automatic Local Storage**: All data is stored locally in your browser
-- **Manual GitHub Sync**: Changes sync to GitHub when you make edits
+- **Manual Sync Button**: Tap the 🔄 button to sync with GitHub (pull + push)
+- **Visual Feedback**: See sync status at top and last sync time near button
 - **Multi-Device**: Both you and your wife can access the same data
-- **Offline Support**: App works offline; syncs when connected
+- **Offline Support**: App works offline; sync when connected
 
-To manually sync:
-- Just pull/refresh the page to get latest data from GitHub
-- Changes you make will push automatically
+### How to Sync
+
+1. **Before using**: Tap 🔄 sync button to get latest changes
+2. **Make your changes**: Add food, mark meals, generate menus
+3. **After changes**: Tap 🔄 sync button to upload
+
+**See [SYNC_GUIDE.md](SYNC_GUIDE.md) for detailed sync workflow and tips**
 
 ## File Structure
 

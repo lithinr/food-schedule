@@ -78,10 +78,12 @@ const App = {
         const closeBtn = document.getElementById('close-settings-btn');
         const saveBtn = document.getElementById('save-settings-btn');
         const overlay = document.getElementById('settings-overlay');
+        const syncBtn = document.getElementById('sync-btn');
         
         openBtn.addEventListener('click', () => this.openSettings());
         closeBtn.addEventListener('click', () => this.closeSettings());
         saveBtn.addEventListener('click', () => this.saveSettings());
+        syncBtn.addEventListener('click', () => this.manualSync());
         
         // Close overlay when clicking outside
         overlay.addEventListener('click', (e) => {
@@ -89,6 +91,10 @@ const App = {
                 this.closeSettings();
             }
         });
+        
+        // Update last sync display
+        this.updateLastSyncDisplay();
+        setInterval(() => this.updateLastSyncDisplay(), 30000); // Update every 30 seconds
     },
     
     openSettings() {
@@ -128,11 +134,12 @@ const App = {
         
         // Try to sync
         try {
-            Utils.showToast('Testing connection...', 'info');
-            await Storage.syncFromGitHub();
+            this.showSyncStatus('Testing connection...');
+            await Storage.fullSync(false);
             
             this.closeSettings();
-            Utils.showToast('GitHub sync configured successfully!', 'success');
+            this.showSyncStatus('✓ Configured successfully', 'success');
+            this.updateLastSyncDisplay();
             
             // Refresh all views
             DailyMenu.render();
@@ -140,8 +147,72 @@ const App = {
             ShoppingList.render();
             FoodManager.render();
         } catch (error) {
-            Utils.showToast('Failed to connect to GitHub. Check your settings.', 'error');
+            this.showSyncStatus('✗ Connection failed', 'error');
             console.error('GitHub sync error:', error);
+        }
+    },
+    
+    async manualSync() {
+        if (!GitHubAPI.isConfigured()) {
+            Utils.showToast('Configure GitHub in Settings first', 'error');
+            this.openSettings();
+            return;
+        }
+        
+        const syncBtn = document.getElementById('sync-btn');
+        syncBtn.classList.add('syncing');
+        syncBtn.disabled = true;
+        
+        this.showSyncStatus('Syncing...');
+        
+        const result = await Storage.fullSync(false);
+        
+        syncBtn.classList.remove('syncing');
+        syncBtn.disabled = false;
+        
+        if (result.success) {
+            this.showSyncStatus('✓ Sync complete', 'success');
+            this.updateLastSyncDisplay();
+            
+            // Refresh all views
+            DailyMenu.render();
+            WeeklyMenu.render();
+            ShoppingList.render();
+            FoodManager.render();
+        } else {
+            this.showSyncStatus('✗ Sync failed: ' + result.error, 'error');
+        }
+    },
+    
+    showSyncStatus(message, type = 'info') {
+        const statusBar = document.getElementById('sync-status-bar');
+        const statusText = document.getElementById('sync-status-text');
+        
+        statusBar.className = 'sync-status-bar';
+        if (type !== 'info') {
+            statusBar.classList.add(type);
+        }
+        
+        statusText.textContent = message;
+        statusBar.classList.remove('hidden');
+        
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            statusBar.classList.add('hidden');
+        }, 3000);
+    },
+    
+    updateLastSyncDisplay() {
+        const display = document.getElementById('last-sync-display');
+        const text = document.getElementById('last-sync-text');
+        const lastSync = Storage.getLastSyncDisplay();
+        
+        text.textContent = lastSync;
+        
+        if (lastSync === 'Never synced') {
+            display.classList.add('never-synced');
+        } else {
+            display.classList.remove('never-synced');
         }
     }
 };

@@ -118,13 +118,7 @@ const DailyMenu = {
     markAsPrepared(category, prepared) {
         MenuAlgorithm.markMealAsPrepared(this.currentDate, category, prepared);
         this.render();
-        
-        // Sync to GitHub
-        Storage.pushToGitHub().then(success => {
-            if (success) {
-                Utils.showToast(prepared ? 'Marked as prepared' : 'Unmarked', 'success');
-            }
-        });
+        Utils.showToast(prepared ? 'Marked as prepared' : 'Unmarked', 'success');
         
         // Update weekly view if visible
         if (document.getElementById('weekly-view').classList.contains('active')) {
@@ -138,13 +132,7 @@ const DailyMenu = {
             const newMenu = MenuAlgorithm.generateDailyMenu(this.currentDate);
             this.saveTodayMenu(dateString, newMenu);
             this.render();
-            
-            // Sync to GitHub
-            Storage.pushToGitHub().then(success => {
-                if (success) {
-                    Utils.showToast('Menu regenerated', 'success');
-                }
-            });
+            Utils.showToast('Menu regenerated', 'success');
         }
     }
 };
