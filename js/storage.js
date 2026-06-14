@@ -104,15 +104,15 @@ const Storage = {
         }
         
         try {
-            // First pull latest data
-            const pullResult = await this.syncFromGitHub(false);
-            
-            // Then push local changes
+            // IMPORTANT: Push local changes FIRST to save them before pulling
             const pushResult = await this.pushToGitHub(false);
+            
+            // Then pull latest data from GitHub (gets updates from other devices)
+            const pullResult = await this.syncFromGitHub(false);
             
             if (pullResult.success && pushResult.success) {
                 if (showToast) {
-                    Utils.showToast('✓ Full sync complete', 'success');
+                    Utils.showToast('✓ Sync complete', 'success');
                 }
                 return { success: true, timestamp: pushResult.timestamp };
             } else {
