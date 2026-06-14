@@ -28,17 +28,6 @@
         "Oil",
         "Mustard seeds"
       ]
-    },
-    {
-      "id": "b4",
-      "name": "Poha",
-      "ingredients": [
-        "Flattened rice",
-        "Onion",
-        "Potato",
-        "Peanuts",
-        "Turmeric"
-      ]
     }
   ],
   "lunch": [
