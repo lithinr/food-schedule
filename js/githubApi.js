@@ -69,14 +69,14 @@ const GitHubAPI = {
         }
     },
     
-    async writeFile(path, content, sha = null) {
+    async writeFile(path, content, sha = null, retryCount = 0) {
+        const maxRetries = 3;
+        
         try {
             // Always fetch latest SHA before writing to prevent conflicts
-            if (!sha) {
-                const existing = await this.readFile(path);
-                if (existing) {
-                    sha = existing.sha;
-                }
+            const existing = await this.readFile(path);
+            if (existing) {
+                sha = existing.sha;
             }
             
             const contentString = JSON.stringify(content, null, 2);
@@ -96,6 +96,15 @@ const GitHubAPI = {
             await this.request('PUT', path, data);
             return true;
         } catch (error) {
+            // Handle 409 Conflict - file was modified by another device
+            if (error.message.includes('409') && retryCount < maxRetries) {
+                console.log(`Conflict detected, retrying... (${retryCount + 1}/${maxRetries})`);
+                // Wait a bit before retrying to avoid race conditions
+                await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+                // Retry with fresh SHA
+                return this.writeFile(path, content, null, retryCount + 1);
+            }
+            
             console.error('Error writing file:', error);
             throw error;
         }

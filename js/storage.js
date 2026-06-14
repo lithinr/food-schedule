@@ -104,11 +104,42 @@ const Storage = {
         }
         
         try {
-            // IMPORTANT: Push local changes FIRST to save them before pulling
-            const pushResult = await this.pushToGitHub(false);
+            // Strategy: Pull first, merge intelligently, then push
+            // This minimizes conflicts and prevents data loss
             
-            // Then pull latest data from GitHub (gets updates from other devices)
+            // 1. Save current local state
+            const localFoodItems = JSON.parse(JSON.stringify(window.foodItems));
+            const localWeeklyMenu = JSON.parse(JSON.stringify(window.weeklyMenu));
+            const localMealHistory = JSON.parse(JSON.stringify(window.mealHistory));
+            
+            // 2. Pull latest from GitHub
             const pullResult = await this.syncFromGitHub(false);
+            
+            // 3. Merge local changes with remote
+            if (pullResult.success) {
+                // Merge food items (combine both, remove duplicates by ID)
+                window.foodItems = this.mergeFoodItems(localFoodItems, window.foodItems);
+                
+                // Merge meal history (combine both, keep unique entries)
+                window.mealHistory = this.mergeMealHistory(localMealHistory, window.mealHistory);
+                
+                // Weekly menu: local takes precedence if same week
+                if (localWeeklyMenu.weekStarting === window.weeklyMenu.weekStarting) {
+                    // Merge days - local overrides remote for same dates
+                    window.weeklyMenu = this.mergeWeeklyMenu(localWeeklyMenu, window.weeklyMenu);
+                } else {
+                    // Different week, keep local
+                    window.weeklyMenu = localWeeklyMenu;
+                }
+                
+                // Save merged data locally
+                this.saveFoodItems(window.foodItems);
+                this.saveWeeklyMenu(window.weeklyMenu);
+                this.saveMealHistory(window.mealHistory);
+            }
+            
+            // 4. Push merged data to GitHub
+            const pushResult = await this.pushToGitHub(false);
             
             if (pullResult.success && pushResult.success) {
                 if (showToast) {
@@ -192,5 +223,89 @@ const Storage = {
             weekStarting: Utils.getDateString(Utils.getWeekStart(new Date())),
             days: []
         };
+    },
+    
+    // Merge strategies to prevent data loss during conflicts
+    mergeFoodItems(localItems, remoteItems) {
+        const merged = {};
+        
+        // For each category
+        for (const category in CONFIG.CATEGORIES) {
+            const local = localItems[category] || [];
+            const remote = remoteItems[category] || [];
+            
+            // Create a map by ID
+            const itemsById = {};
+            
+            // Add remote items first
+            remote.forEach(item => {
+                itemsById[item.id] = item;
+            });
+            
+            // Add/overwrite with local items (local takes precedence)
+            local.forEach(item => {
+                itemsById[item.id] = item;
+            });
+            
+            // Convert back to array
+            merged[category] = Object.values(itemsById);
+        }
+        
+        return merged;
+    },
+    
+    mergeMealHistory(localHistory, remoteHistory) {
+        // Combine both arrays
+        const combined = [...remoteHistory, ...localHistory];
+        
+        // Remove duplicates by date+category key
+        const uniqueMap = {};
+        combined.forEach(entry => {
+            const key = `${entry.date}-${entry.category}`;
+            // Keep the one with most recent timestamp
+            if (!uniqueMap[key] || 
+                (entry.timestamp && uniqueMap[key].timestamp && 
+                 entry.timestamp > uniqueMap[key].timestamp)) {
+                uniqueMap[key] = entry;
+            }
+        });
+        
+        return Object.values(uniqueMap);
+    },
+    
+    mergeWeeklyMenu(localMenu, remoteMenu) {
+        // Local menu takes precedence for same week
+        const merged = {
+            weekStarting: localMenu.weekStarting,
+            days: []
+        };
+        
+        // Create map of local days
+        const localDaysMap = {};
+        localMenu.days.forEach(day => {
+            localDaysMap[day.date] = day;
+        });
+        
+        // Create map of remote days
+        const remoteDaysMap = {};
+        remoteMenu.days.forEach(day => {
+            remoteDaysMap[day.date] = day;
+        });
+        
+        // Merge: local days take precedence
+        const allDates = new Set([
+            ...Object.keys(localDaysMap),
+            ...Object.keys(remoteDaysMap)
+        ]);
+        
+        allDates.forEach(date => {
+            // Prefer local, fallback to remote
+            merged.days.push(localDaysMap[date] || remoteDaysMap[date]);
+        });
+        
+        // Sort by date
+        merged.days.sort((a, b) => a.date.localeCompare(b.date));
+        
+        return merged;
     }
 };
