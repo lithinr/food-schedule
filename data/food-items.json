@@ -1,0 +1,75 @@
+{
+  "breakfast": [
+    {
+      "id": "b1",
+      "name": "Idli",
+      "ingredients": ["Rice", "Urad dal", "Salt"]
+    },
+    {
+      "id": "b2",
+      "name": "Dosa",
+      "ingredients": ["Rice", "Urad dal", "Salt", "Oil"]
+    },
+    {
+      "id": "b3",
+      "name": "Upma",
+      "ingredients": ["Semolina", "Vegetables", "Oil", "Mustard seeds"]
+    },
+    {
+      "id": "b4",
+      "name": "Poha",
+      "ingredients": ["Flattened rice", "Onion", "Potato", "Peanuts", "Turmeric"]
+    }
+  ],
+  "lunch": [
+    {
+      "id": "l1",
+      "name": "Rice with Dal",
+      "ingredients": ["Rice", "Toor dal", "Tomatoes", "Spices"]
+    },
+    {
+      "id": "l2",
+      "name": "Chapati with Curry",
+      "ingredients": ["Wheat flour", "Vegetables", "Spices", "Oil"]
+    },
+    {
+      "id": "l3",
+      "name": "Pulao",
+      "ingredients": ["Rice", "Mixed vegetables", "Spices", "Ghee"]
+    }
+  ],
+  "morningSnack": [
+    {
+      "id": "ms1",
+      "name": "Fruits",
+      "ingredients": ["Banana", "Apple", "Orange"]
+    },
+    {
+      "id": "ms2",
+      "name": "Biscuits with Milk",
+      "ingredients": ["Biscuits", "Milk"]
+    },
+    {
+      "id": "ms3",
+      "name": "Banana Smoothie",
+      "ingredients": ["Banana", "Milk", "Honey"]
+    }
+  ],
+  "eveningSnack": [
+    {
+      "id": "es1",
+      "name": "Pakoda",
+      "ingredients": ["Gram flour", "Onion", "Oil", "Spices"]
+    },
+    {
+      "id": "es2",
+      "name": "Sandwich",
+      "ingredients": ["Bread", "Vegetables", "Butter", "Cheese"]
+    },
+    {
+      "id": "es3",
+      "name": "Samosa",
+      "ingredients": ["All-purpose flour", "Potato", "Peas", "Spices", "Oil"]
+    }
+  ]
+}
