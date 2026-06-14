@@ -279,6 +279,62 @@
           "prepared": false
         }
       }
+    },
+    {
+      "date": "2026-06-14",
+      "meals": {
+        "breakfast": {
+          "id": "b3",
+          "name": "Upma",
+          "ingredients": [
+            "Semolina",
+            "Vegetables",
+            "Oil",
+            "Mustard seeds"
+          ],
+          "category": "breakfast",
+          "date": "2026-06-14",
+          "prepared": false
+        },
+        "lunch": {
+          "id": "l2",
+          "name": "Chapati with Curry",
+          "ingredients": [
+            "Wheat flour",
+            "Vegetables",
+            "Spices",
+            "Oil"
+          ],
+          "category": "lunch",
+          "date": "2026-06-14",
+          "prepared": false
+        },
+        "morningSnack": {
+          "id": "ms3",
+          "name": "Banana Smoothie",
+          "ingredients": [
+            "Banana",
+            "Milk",
+            "Honey"
+          ],
+          "category": "morningSnack",
+          "date": "2026-06-14",
+          "prepared": false
+        },
+        "eveningSnack": {
+          "id": "es2",
+          "name": "Sandwich",
+          "ingredients": [
+            "Bread",
+            "Vegetables",
+            "Butter",
+            "Cheese"
+          ],
+          "category": "eveningSnack",
+          "date": "2026-06-14",
+          "prepared": false
+        }
+      }
     }
   ]
 }

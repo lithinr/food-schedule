@@ -2,7 +2,7 @@
   "breakfast": [
     {
       "id": "b1",
-      "name": "Idli",
+      "name": "Idli + Sambaar",
       "ingredients": [
         "Rice",
         "Urad dal",
@@ -11,7 +11,7 @@
     },
     {
       "id": "b2",
-      "name": "Dosa",
+      "name": "Dosa + Onion Chutney",
       "ingredients": [
         "Rice",
         "Urad dal",
@@ -21,19 +21,29 @@
     },
     {
       "id": "b3",
-      "name": "Upma",
+      "name": "Poori + Paneer curry",
       "ingredients": [
         "Semolina",
         "Vegetables",
         "Oil",
         "Mustard seeds"
       ]
+    },
+    {
+      "id": "mqdimrus37mnyz8befi",
+      "name": "Puttu + Banana",
+      "ingredients": []
+    },
+    {
+      "id": "mqdiqs57aoxqnvx5qg",
+      "name": "Appam + Kadala\\Paneer Curry",
+      "ingredients": []
     }
   ],
   "lunch": [
     {
       "id": "l1",
-      "name": "Rice with Dal",
+      "name": "Aloo Paratha",
       "ingredients": [
         "Rice",
         "Toor dal",
@@ -43,7 +53,7 @@
     },
     {
       "id": "l2",
-      "name": "Chapati with Curry",
+      "name": "Poori + Paneer curry",
       "ingredients": [
         "Wheat flour",
         "Vegetables",
@@ -53,7 +63,7 @@
     },
     {
       "id": "l3",
-      "name": "Pulao",
+      "name": "Chappathi + Paneer curry",
       "ingredients": [
         "Rice",
         "Mixed vegetables",
@@ -88,6 +98,16 @@
         "Milk",
         "Honey"
       ]
+    },
+    {
+      "id": "mqdivfzoz9m1q3ezpkf",
+      "name": "Dry Fruits Laddu",
+      "ingredients": []
+    },
+    {
+      "id": "mqdivqocnzj7yjd47cb",
+      "name": "Aval",
+      "ingredients": []
     }
   ],
   "eveningSnack": [
