@@ -42,9 +42,9 @@ const MenuAlgorithm = {
         return menu;
     },
     
-    generateWeeklyMenu(startDate = null) {
+    generateWeeklyMenu(startDate = null, numDays = 7) {
         if (!startDate) {
-            startDate = Utils.getWeekStart(new Date());
+            startDate = Utils.getMonday(new Date());
         }
         
         const weeklyMenu = {
@@ -52,8 +52,8 @@ const MenuAlgorithm = {
             days: []
         };
         
-        // Generate menu for each day of the week
-        for (let i = 0; i < 7; i++) {
+        // Generate menu for specified number of days (5 for workweek, 7 for full week)
+        for (let i = 0; i < numDays; i++) {
             const date = Utils.addDays(startDate, i);
             const dailyMenu = this.generateDailyMenu(date);
             

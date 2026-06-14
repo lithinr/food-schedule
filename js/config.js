@@ -22,6 +22,7 @@ const CONFIG = {
         MEAL_HISTORY: 'data/meal-history.json'
     },
     MENU_ROTATION_DAYS: 7, // Avoid repeats within 7 days
+    WORK_DAYS: 5, // Monday to Friday
     VERSION: '1.0.0'
 };
 
@@ -49,6 +50,13 @@ const Utils = {
         const d = new Date(date);
         const day = d.getDay();
         const diff = d.getDate() - day;
+        return new Date(d.setDate(diff));
+    },
+    
+    getMonday(date) {
+        const d = new Date(date);
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
         return new Date(d.setDate(diff));
     },
     

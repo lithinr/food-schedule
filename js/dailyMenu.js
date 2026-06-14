@@ -21,10 +21,24 @@ const DailyMenu = {
         // Get today's menu from weekly menu
         let todayMenu = this.getTodayMenu(dateString);
         
-        // If no menu exists for today, generate one
-        if (!todayMenu) {
-            todayMenu = MenuAlgorithm.generateDailyMenu(this.currentDate);
-            this.saveTodayMenu(dateString, todayMenu);
+        // Only generate if doesn't exist and current week menu is loaded
+        const currentMonday = Utils.getMonday(new Date());
+        const currentMondayString = Utils.getDateString(currentMonday);
+        
+        if (!todayMenu || window.weeklyMenu.weekStarting !== currentMondayString) {
+            // Ensure weekly menu exists for current week
+            if (window.weeklyMenu.weekStarting !== currentMondayString) {
+                window.weeklyMenu = MenuAlgorithm.generateWeeklyMenu(currentMonday, CONFIG.WORK_DAYS);
+                Storage.saveWeeklyMenu(window.weeklyMenu);
+            }
+            
+            todayMenu = this.getTodayMenu(dateString);
+            
+            // If still no menu (weekend), generate one just for today
+            if (!todayMenu) {
+                todayMenu = MenuAlgorithm.generateDailyMenu(this.currentDate);
+                this.saveTodayMenu(dateString, todayMenu);
+            }
         }
         
         // Render menu

@@ -56,7 +56,9 @@ const GitHubAPI = {
             const response = await this.request('GET', path);
             if (!response) return null;
             
-            const content = atob(response.content);
+            // Remove newlines and decode properly
+            const cleanContent = response.content.replace(/\n/g, '');
+            const content = decodeURIComponent(escape(atob(cleanContent)));
             return {
                 content: JSON.parse(content),
                 sha: response.sha
