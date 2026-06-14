@@ -75,7 +75,7 @@
   "morningSnack": [
     {
       "id": "ms1",
-      "name": "Fruits",
+      "name": "Apple",
       "ingredients": [
         "Banana",
         "Apple",
@@ -84,7 +84,7 @@
     },
     {
       "id": "ms2",
-      "name": "Biscuits with Milk",
+      "name": "Bread Butter Jam",
       "ingredients": [
         "Biscuits",
         "Milk"
@@ -92,12 +92,22 @@
     },
     {
       "id": "ms3",
-      "name": "Banana Smoothie",
+      "name": "Banana Fritters",
       "ingredients": [
         "Banana",
         "Milk",
         "Honey"
       ]
+    },
+    {
+      "id": "mqdivfzoz9m1q3ezpkf",
+      "name": "Dry Fruits Laddu",
+      "ingredients": []
+    },
+    {
+      "id": "mqdivqocnzj7yjd47cb",
+      "name": "Aval",
+      "ingredients": []
     }
   ],
   "eveningSnack": [
