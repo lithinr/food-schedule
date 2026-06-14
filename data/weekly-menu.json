@@ -1,45 +1,45 @@
 {
-  "weekStarting": "2026-06-28",
+  "weekStarting": "2026-06-21",
   "days": [
     {
-      "date": "2026-06-28",
+      "date": "2026-06-21",
       "meals": {
         "breakfast": {
-          "id": "b3",
-          "name": "Upma",
+          "id": "b4",
+          "name": "Poha",
           "ingredients": [
-            "Semolina",
-            "Vegetables",
-            "Oil",
-            "Mustard seeds"
+            "Flattened rice",
+            "Onion",
+            "Potato",
+            "Peanuts",
+            "Turmeric"
           ],
           "category": "breakfast",
-          "date": "2026-06-28",
+          "date": "2026-06-21",
           "prepared": false
         },
         "lunch": {
-          "id": "l1",
-          "name": "Rice with Dal",
+          "id": "l2",
+          "name": "Chapati with Curry",
           "ingredients": [
-            "Rice",
-            "Toor dal",
-            "Tomatoes",
-            "Spices"
+            "Wheat flour",
+            "Vegetables",
+            "Spices",
+            "Oil"
           ],
           "category": "lunch",
-          "date": "2026-06-28",
+          "date": "2026-06-21",
           "prepared": false
         },
         "morningSnack": {
-          "id": "ms1",
-          "name": "Fruits",
+          "id": "ms2",
+          "name": "Biscuits with Milk",
           "ingredients": [
-            "Banana",
-            "Apple",
-            "Orange"
+            "Biscuits",
+            "Milk"
           ],
           "category": "morningSnack",
-          "date": "2026-06-28",
+          "date": "2026-06-21",
           "prepared": false
         },
         "eveningSnack": {
@@ -53,124 +53,13 @@
             "Oil"
           ],
           "category": "eveningSnack",
-          "date": "2026-06-28",
+          "date": "2026-06-21",
           "prepared": false
         }
       }
     },
     {
-      "date": "2026-06-29",
-      "meals": {
-        "breakfast": {
-          "id": "b1",
-          "name": "Idli",
-          "ingredients": [
-            "Rice",
-            "Urad dal",
-            "Salt"
-          ],
-          "category": "breakfast",
-          "date": "2026-06-29",
-          "prepared": false
-        },
-        "lunch": {
-          "id": "l2",
-          "name": "Chapati with Curry",
-          "ingredients": [
-            "Wheat flour",
-            "Vegetables",
-            "Spices",
-            "Oil"
-          ],
-          "category": "lunch",
-          "date": "2026-06-29",
-          "prepared": false
-        },
-        "morningSnack": {
-          "id": "ms3",
-          "name": "Banana Smoothie",
-          "ingredients": [
-            "Banana",
-            "Milk",
-            "Honey"
-          ],
-          "category": "morningSnack",
-          "date": "2026-06-29",
-          "prepared": false
-        },
-        "eveningSnack": {
-          "id": "es1",
-          "name": "Pakoda",
-          "ingredients": [
-            "Gram flour",
-            "Onion",
-            "Oil",
-            "Spices"
-          ],
-          "category": "eveningSnack",
-          "date": "2026-06-29",
-          "prepared": false
-        }
-      }
-    },
-    {
-      "date": "2026-06-30",
-      "meals": {
-        "breakfast": {
-          "id": "b4",
-          "name": "Poha",
-          "ingredients": [
-            "Flattened rice",
-            "Onion",
-            "Potato",
-            "Peanuts",
-            "Turmeric"
-          ],
-          "category": "breakfast",
-          "date": "2026-06-30",
-          "prepared": false
-        },
-        "lunch": {
-          "id": "l3",
-          "name": "Pulao",
-          "ingredients": [
-            "Rice",
-            "Mixed vegetables",
-            "Spices",
-            "Ghee"
-          ],
-          "category": "lunch",
-          "date": "2026-06-30",
-          "prepared": false
-        },
-        "morningSnack": {
-          "id": "ms2",
-          "name": "Biscuits with Milk",
-          "ingredients": [
-            "Biscuits",
-            "Milk"
-          ],
-          "category": "morningSnack",
-          "date": "2026-06-30",
-          "prepared": false
-        },
-        "eveningSnack": {
-          "id": "es2",
-          "name": "Sandwich",
-          "ingredients": [
-            "Bread",
-            "Vegetables",
-            "Butter",
-            "Cheese"
-          ],
-          "category": "eveningSnack",
-          "date": "2026-06-30",
-          "prepared": false
-        }
-      }
-    },
-    {
-      "date": "2026-07-01",
+      "date": "2026-06-22",
       "meals": {
         "breakfast": {
           "id": "b2",
@@ -182,64 +71,7 @@
             "Oil"
           ],
           "category": "breakfast",
-          "date": "2026-07-01",
-          "prepared": false
-        },
-        "lunch": {
-          "id": "l3",
-          "name": "Pulao",
-          "ingredients": [
-            "Rice",
-            "Mixed vegetables",
-            "Spices",
-            "Ghee"
-          ],
-          "category": "lunch",
-          "date": "2026-07-01",
-          "prepared": false
-        },
-        "morningSnack": {
-          "id": "ms1",
-          "name": "Fruits",
-          "ingredients": [
-            "Banana",
-            "Apple",
-            "Orange"
-          ],
-          "category": "morningSnack",
-          "date": "2026-07-01",
-          "prepared": false
-        },
-        "eveningSnack": {
-          "id": "es2",
-          "name": "Sandwich",
-          "ingredients": [
-            "Bread",
-            "Vegetables",
-            "Butter",
-            "Cheese"
-          ],
-          "category": "eveningSnack",
-          "date": "2026-07-01",
-          "prepared": false
-        }
-      }
-    },
-    {
-      "date": "2026-07-02",
-      "meals": {
-        "breakfast": {
-          "id": "b4",
-          "name": "Poha",
-          "ingredients": [
-            "Flattened rice",
-            "Onion",
-            "Potato",
-            "Peanuts",
-            "Turmeric"
-          ],
-          "category": "breakfast",
-          "date": "2026-07-02",
+          "date": "2026-06-22",
           "prepared": false
         },
         "lunch": {
@@ -252,18 +84,19 @@
             "Spices"
           ],
           "category": "lunch",
-          "date": "2026-07-02",
+          "date": "2026-06-22",
           "prepared": false
         },
         "morningSnack": {
-          "id": "ms2",
-          "name": "Biscuits with Milk",
+          "id": "ms1",
+          "name": "Fruits",
           "ingredients": [
-            "Biscuits",
-            "Milk"
+            "Banana",
+            "Apple",
+            "Orange"
           ],
           "category": "morningSnack",
-          "date": "2026-07-02",
+          "date": "2026-06-22",
           "prepared": false
         },
         "eveningSnack": {
@@ -276,26 +109,25 @@
             "Spices"
           ],
           "category": "eveningSnack",
-          "date": "2026-07-02",
+          "date": "2026-06-22",
           "prepared": false
         }
       }
     },
     {
-      "date": "2026-07-03",
+      "date": "2026-06-23",
       "meals": {
         "breakfast": {
-          "id": "b4",
-          "name": "Poha",
+          "id": "b3",
+          "name": "Upma",
           "ingredients": [
-            "Flattened rice",
-            "Onion",
-            "Potato",
-            "Peanuts",
-            "Turmeric"
+            "Semolina",
+            "Vegetables",
+            "Oil",
+            "Mustard seeds"
           ],
           "category": "breakfast",
-          "date": "2026-07-03",
+          "date": "2026-06-23",
           "prepared": false
         },
         "lunch": {
@@ -308,63 +140,7 @@
             "Ghee"
           ],
           "category": "lunch",
-          "date": "2026-07-03",
-          "prepared": false
-        },
-        "morningSnack": {
-          "id": "ms1",
-          "name": "Fruits",
-          "ingredients": [
-            "Banana",
-            "Apple",
-            "Orange"
-          ],
-          "category": "morningSnack",
-          "date": "2026-07-03",
-          "prepared": false
-        },
-        "eveningSnack": {
-          "id": "es1",
-          "name": "Pakoda",
-          "ingredients": [
-            "Gram flour",
-            "Onion",
-            "Oil",
-            "Spices"
-          ],
-          "category": "eveningSnack",
-          "date": "2026-07-03",
-          "prepared": false
-        }
-      }
-    },
-    {
-      "date": "2026-07-04",
-      "meals": {
-        "breakfast": {
-          "id": "b3",
-          "name": "Upma",
-          "ingredients": [
-            "Semolina",
-            "Vegetables",
-            "Oil",
-            "Mustard seeds"
-          ],
-          "category": "breakfast",
-          "date": "2026-07-04",
-          "prepared": false
-        },
-        "lunch": {
-          "id": "l2",
-          "name": "Chapati with Curry",
-          "ingredients": [
-            "Wheat flour",
-            "Vegetables",
-            "Spices",
-            "Oil"
-          ],
-          "category": "lunch",
-          "date": "2026-07-04",
+          "date": "2026-06-23",
           "prepared": false
         },
         "morningSnack": {
@@ -376,7 +152,117 @@
             "Honey"
           ],
           "category": "morningSnack",
-          "date": "2026-07-04",
+          "date": "2026-06-23",
+          "prepared": false
+        },
+        "eveningSnack": {
+          "id": "es2",
+          "name": "Sandwich",
+          "ingredients": [
+            "Bread",
+            "Vegetables",
+            "Butter",
+            "Cheese"
+          ],
+          "category": "eveningSnack",
+          "date": "2026-06-23",
+          "prepared": false
+        }
+      }
+    },
+    {
+      "date": "2026-06-24",
+      "meals": {
+        "breakfast": {
+          "id": "b1",
+          "name": "Idli",
+          "ingredients": [
+            "Rice",
+            "Urad dal",
+            "Salt"
+          ],
+          "category": "breakfast",
+          "date": "2026-06-24",
+          "prepared": false
+        },
+        "lunch": {
+          "id": "l1",
+          "name": "Rice with Dal",
+          "ingredients": [
+            "Rice",
+            "Toor dal",
+            "Tomatoes",
+            "Spices"
+          ],
+          "category": "lunch",
+          "date": "2026-06-24",
+          "prepared": false
+        },
+        "morningSnack": {
+          "id": "ms3",
+          "name": "Banana Smoothie",
+          "ingredients": [
+            "Banana",
+            "Milk",
+            "Honey"
+          ],
+          "category": "morningSnack",
+          "date": "2026-06-24",
+          "prepared": false
+        },
+        "eveningSnack": {
+          "id": "es2",
+          "name": "Sandwich",
+          "ingredients": [
+            "Bread",
+            "Vegetables",
+            "Butter",
+            "Cheese"
+          ],
+          "category": "eveningSnack",
+          "date": "2026-06-24",
+          "prepared": false
+        }
+      }
+    },
+    {
+      "date": "2026-06-25",
+      "meals": {
+        "breakfast": {
+          "id": "b2",
+          "name": "Dosa",
+          "ingredients": [
+            "Rice",
+            "Urad dal",
+            "Salt",
+            "Oil"
+          ],
+          "category": "breakfast",
+          "date": "2026-06-25",
+          "prepared": false
+        },
+        "lunch": {
+          "id": "l1",
+          "name": "Rice with Dal",
+          "ingredients": [
+            "Rice",
+            "Toor dal",
+            "Tomatoes",
+            "Spices"
+          ],
+          "category": "lunch",
+          "date": "2026-06-25",
+          "prepared": false
+        },
+        "morningSnack": {
+          "id": "ms2",
+          "name": "Biscuits with Milk",
+          "ingredients": [
+            "Biscuits",
+            "Milk"
+          ],
+          "category": "morningSnack",
+          "date": "2026-06-25",
           "prepared": false
         },
         "eveningSnack": {
@@ -389,7 +275,120 @@
             "Spices"
           ],
           "category": "eveningSnack",
-          "date": "2026-07-04",
+          "date": "2026-06-25",
+          "prepared": false
+        }
+      }
+    },
+    {
+      "date": "2026-06-26",
+      "meals": {
+        "breakfast": {
+          "id": "b2",
+          "name": "Dosa",
+          "ingredients": [
+            "Rice",
+            "Urad dal",
+            "Salt",
+            "Oil"
+          ],
+          "category": "breakfast",
+          "date": "2026-06-26",
+          "prepared": false
+        },
+        "lunch": {
+          "id": "l3",
+          "name": "Pulao",
+          "ingredients": [
+            "Rice",
+            "Mixed vegetables",
+            "Spices",
+            "Ghee"
+          ],
+          "category": "lunch",
+          "date": "2026-06-26",
+          "prepared": false
+        },
+        "morningSnack": {
+          "id": "ms2",
+          "name": "Biscuits with Milk",
+          "ingredients": [
+            "Biscuits",
+            "Milk"
+          ],
+          "category": "morningSnack",
+          "date": "2026-06-26",
+          "prepared": false
+        },
+        "eveningSnack": {
+          "id": "es3",
+          "name": "Samosa",
+          "ingredients": [
+            "All-purpose flour",
+            "Potato",
+            "Peas",
+            "Spices",
+            "Oil"
+          ],
+          "category": "eveningSnack",
+          "date": "2026-06-26",
+          "prepared": false
+        }
+      }
+    },
+    {
+      "date": "2026-06-27",
+      "meals": {
+        "breakfast": {
+          "id": "b3",
+          "name": "Upma",
+          "ingredients": [
+            "Semolina",
+            "Vegetables",
+            "Oil",
+            "Mustard seeds"
+          ],
+          "category": "breakfast",
+          "date": "2026-06-27",
+          "prepared": false
+        },
+        "lunch": {
+          "id": "l1",
+          "name": "Rice with Dal",
+          "ingredients": [
+            "Rice",
+            "Toor dal",
+            "Tomatoes",
+            "Spices"
+          ],
+          "category": "lunch",
+          "date": "2026-06-27",
+          "prepared": false
+        },
+        "morningSnack": {
+          "id": "ms3",
+          "name": "Banana Smoothie",
+          "ingredients": [
+            "Banana",
+            "Milk",
+            "Honey"
+          ],
+          "category": "morningSnack",
+          "date": "2026-06-27",
+          "prepared": false
+        },
+        "eveningSnack": {
+          "id": "es3",
+          "name": "Samosa",
+          "ingredients": [
+            "All-purpose flour",
+            "Potato",
+            "Peas",
+            "Spices",
+            "Oil"
+          ],
+          "category": "eveningSnack",
+          "date": "2026-06-27",
           "prepared": false
         }
       }
